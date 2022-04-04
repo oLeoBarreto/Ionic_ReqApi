@@ -8,10 +8,14 @@ export class UserService {
 
   urlApi = 'https://reqres.in/api/users';
 
-  constructor(private hhtp: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getUsersList(url: string) {
-    return this.hhtp.get(url)
+    return this.http.get(url);
+  }
+
+  getUserData(url: string) {
+    return this.http.get(url);
   }
 
 }

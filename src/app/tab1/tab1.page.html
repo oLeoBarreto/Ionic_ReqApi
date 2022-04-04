@@ -16,7 +16,7 @@
   <ion-list>
     <ion-item *ngFor="let user of listUser">
       <ion-buttons slot="end">
-        <ion-button onclick="">
+        <ion-button (click)="userDetails(user.id)">
           <ion-icon name="call-outline"></ion-icon>
         </ion-button>
       </ion-buttons>
