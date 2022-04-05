@@ -3,7 +3,6 @@ import { UserService } from '../services/user.service';
 import { ModalController } from '@ionic/angular';
 import { InformPage } from '../modal/inform/inform.page';
 import { IonRouterOutlet } from '@ionic/angular';
-import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -23,20 +22,25 @@ export class Tab1Page implements OnInit {
   constructor(
     public apiService: UserService,
     public modalController: ModalController,
-    private routerOutlet: IonRouterOutlet,
-    public navCtrl: NavController,
+    private routerOutlet: IonRouterOutlet
   ) { }
 
   ngOnInit(): void {
     this.getUsers(this.apiService.urlApi);
   }
 
-  async openModal() {
+  async openModal(object: any) {
     const modal = await this.modalController.create({
       component: InformPage,
       cssClass: 'my-custom-class',
       swipeToClose: true,
-      presentingElement: this.routerOutlet.nativeEl
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        "email": object.email,
+        "first_name": object.first_name,
+        "last_name": object.last_name,
+        "avatar": object.avatar
+      }
     });
     return await modal.present();
   }
@@ -66,12 +70,12 @@ export class Tab1Page implements OnInit {
     this.userDetail = {};
     this.apiService.getUserData(url).subscribe(res => {
       this.userDetail = res['data'];
-      console.table(res['data']);
+      this.openModal(this.userDetail);
     });
   }
 
   userDetails(id: number) {
     this.userId = id;
-    this.getUserDetail(`${this.apiService.urlApi}/${this.userId}`);
+    this.getUserDetail(`${this.apiService.urlApi}/${this.userId}`)
   }
 }

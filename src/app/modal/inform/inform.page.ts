@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ModalController } from '@ionic/angular';
 
@@ -9,7 +9,10 @@ import { ModalController } from '@ionic/angular';
 })
 export class InformPage implements OnInit {
 
-  private user;
+  @Input() email: string;
+  @Input() first_name: string;
+  @Input() last_name: string;
+  @Input() avatar: string;
 
   constructor(
     public apiService: UserService,
